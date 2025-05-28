@@ -6,6 +6,85 @@
     <title>ToDoNot</title>
 </head>
 <body>
-    <div>Howdy</div>
+    <div class="sidebar">List of projects
+
+    </div>
+    <div class="mainarea">
+        
+        <div class="input-forms">
+            <form class="project-form">
+                <div>Project Submission Form: </div><br>
+                <!-- Project Name Input -->
+                <label for="name">Project Name:</label>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <!-- Description Input -->
+                <label for="description">Description:</label>
+                <input type="text" id="descripton" name="description" required><br><br>
+
+                <!-- Due Date Input -->
+                <label for="duedate">Due Date:</label>
+                <input type="date" id="duedate" name="duedate" required><br><br>
+
+                <!-- Priority Input -->
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="low">Low</option>
+                    <option value="medium" default>Medium</option>
+                    <option value="high">High</option>
+                    <option value="urgent">Urgent</option>
+                </select><br><br>
+                
+                <!-- Submit Button -->
+                <input type="submit" value="Submit">
+
+            </form>
+
+            <form class="todo-form">
+                <div>To-Do Item Submission Form: </div><br>
+
+                <!-- Project Drop down -->
+                <label for="pid">Which Project?:</label>
+                <select id="pid" name="pid">
+                    <option>Select Project...</option>
+                </select><br><br>   
+
+                <!-- To Do Name Input -->
+                <label for="todo-name">Task Name:</label>
+                <input type="text" id="todo-name" name="todo-name" required><br><br>
+
+                <!-- Description Input -->
+                <label for="todo-description">Description:</label>
+                <input type="text" id="todo-description" name="todo-description" required><br><br>
+
+                <!-- Due Date Input -->
+                <label for="todo-duedate">Due Date:</label>
+                <input type="date" id="todo-duedate" name="todo-duedate" required><br><br>
+
+                <!-- Status Input -->
+                <label for="todo-status">Status:</label>
+                <select id="todo-status" name="todo-status">
+                    <option value="not-started" default>Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select><br><br>
+
+                <!-- Priority Input -->
+                <label for="todo-priority">Priority:</label>
+                <select id="todo-priority" name="todo-priority">
+                    <option value="todo-low">Low</option>
+                    <option value="todo-medium" default>Medium</option>
+                    <option value="todo-high">High</option>
+                    <option value="todo-urgent">Urgent</option>
+                </select><br><br>
+                
+                <!-- Submit Button -->
+                <input type="submit" value="Submit">
+
+            </form>
+        </div>
+
+        <div class="rendered">Rendered crap</div>
+    </div>
 </body>
 </html>
