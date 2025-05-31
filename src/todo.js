@@ -3,6 +3,7 @@ class Todo {
     constructor() {
         // this.projects = this.updateList();
         this.initializeEventHandlers();
+        this.populateProjectDropdown();
     }
 
     initializeEventHandlers() {
@@ -63,6 +64,25 @@ class Todo {
             prDiv.innerText = 'Project: ' + project['name'];
             sidebar.append(prDiv);
         });
+    }
+
+    populateProjectDropdown() {
+        const pid = document.querySelector('#pid')
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        if (projects) {
+            pid.innerText = '';
+            projects.forEach(project => {
+                let input = document.createElement('option');
+                input.value = project.pid;
+                input.innerText = project.name;
+                pid.append(input);
+            })
+        } else {
+            let input = document.createElement('option');
+            input.innerText = 'No Projects Availabe';
+            pid.append(input);
+            return;
+        }
     }
 
     deleteProject() {
