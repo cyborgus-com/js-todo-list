@@ -7,9 +7,15 @@ class Todo {
 
     initializeEventHandlers() {
         const submitButton = document.querySelector("#project-submit");
+
         submitButton.addEventListener("click", (e) => {
             e.preventDefault();
             this.createProject();
+        })
+
+        const listProjectsButton = document.querySelector('#list-my-projects');
+        listProjectsButton.addEventListener('click', () => {
+            this.updateList();
         })
 
     }
@@ -22,6 +28,10 @@ class Todo {
         const projectDue = form.elements["duedate"].value;
         const projectPriority = form.elements["priority"].value;
         
+        if (projectName === '') {
+            return;
+        }
+
         let project = 
             {
                 pid: Date.now(),
@@ -35,6 +45,7 @@ class Todo {
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
         projects.push(project);
         localStorage.setItem('projects', JSON.stringify(projects));
+        this.updateList();
         form.reset();
         }
 
@@ -43,7 +54,15 @@ class Todo {
     }
 
     updateList() {
-        
+        const sidebar = document.querySelector('.sidebar-projects');
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        sidebar.innerText = '';
+
+        projects.forEach(project => {
+            let prDiv = document.createElement('div');
+            prDiv.innerText = 'Project: ' + project['name'];
+            sidebar.append(prDiv);
+        });
     }
 
     deleteProject() {
