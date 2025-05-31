@@ -4,6 +4,7 @@ class Todo {
         // this.projects = this.updateList();
         this.initializeEventHandlers();
         this.populateProjectDropdown();
+        this.updateList();
     }
 
     initializeEventHandlers() {
@@ -14,6 +15,12 @@ class Todo {
             this.createProject();
         })
 
+        const todoSubmitButton = document.querySelector('#todo-submit');
+        todoSubmitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.createToDo();
+        })
+        
         const listProjectsButton = document.querySelector('#list-my-projects');
         listProjectsButton.addEventListener('click', () => {
             this.updateList();
@@ -46,13 +53,14 @@ class Todo {
         projects.push(project);
         localStorage.setItem('projects', JSON.stringify(projects));
         this.updateList();
+        this.populateProjectDropdown();
         form.reset();
-        }
+    }
 
     createToDo() {
-        const form = document.querySelector('todo-form');
+        const form = document.querySelector('.todo-form');
 
-        const pid = form.elements['pid'].value;
+        const pid = Number(form.elements['pid'].value);
         const todoName = form.elements['todo-name'].value;
         const todoDesc = form.elements['todo-description'].value;
         const todoDueDate = form.elements['todo-duedate'].value;
@@ -63,19 +71,39 @@ class Todo {
             return;
         }
 
-        let todo = {
-            // CONTINUE HERE
-            // FOLLOW PROJECT CREATION
-            // WITH THE EXCEPTION OF FINDING PROJECT IN LOCALSTAORAGE BY PID 
-            // AND APPENDING TODO ARRAY THERE
+        let newTodo = {
+            tid: Date.now(),
+            pid: pid,
+            name: todoName,
+            description: todoDesc,
+            duedate: todoDueDate,
+            status: todoStatus,
+            priority: todoPriority
         }
 
+        this.addTodo(pid, newTodo);
+
+        this.updateList();
+        form.reset();
+    }
+
+    addTodo(pid, newTodo) {
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+        projects = projects.map(project => 
+            project.pid === pid
+                ? {...project, todos: [...(project.todos || []), newTodo]}
+                : project
+        );
+
+        localStorage.setItem('projects', JSON.stringify(projects));
     }
 
     updateList() {
         const sidebar = document.querySelector('.sidebar-projects');
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
         sidebar.innerText = '';
+        // ACTION: need to include default project behavior here somehow
 
         projects.forEach(project => {
             let prDiv = document.createElement('div');
