@@ -1,41 +1,49 @@
 class Todo {
 
     constructor() {
-        this.projects = updateList();
+        // this.projects = this.updateList();
+        this.initializeEventHandlers();
+    }
+
+    initializeEventHandlers() {
+        const submitButton = document.querySelector("#project-submit");
+        submitButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.createProject();
+        })
+
     }
 
     createProject() {
         const form = document.querySelector(".project-form");
-        const submitButton = document.querySelector("#project-submit");
 
         const projectName = form.elements["name"].value;
         const projectDesc = form.elements["description"].value;
         const projectDue = form.elements["duedate"].value;
         const projectPriority = form.elements["priority"].value;
         
-        let project = [
+        let project = 
             {
-                pid: new Date(now),
+                pid: Date.now(),
                 name: projectName,
                 description: projectDesc,
                 duedate: projectDue,
                 priority: projectPriority,
                 todos: []
             }
-        ]
 
-        submitButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.setItem('projects', JSON.stringify(project));
-        })
-    }
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        projects.push(project);
+        localStorage.setItem('projects', JSON.stringify(projects));
+        form.reset();
+        }
 
     createToDo() {
 
     }
 
     updateList() {
-
+        
     }
 
     deleteProject() {
@@ -47,3 +55,5 @@ class Todo {
     }
 
 }
+
+const todo = new Todo();

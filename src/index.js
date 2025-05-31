@@ -1,5 +1,5 @@
 import "./styles.css";
-import {Todo} from "./todo.js";
+import "./todo.js";
 
 import { compareAsc, format } from "date-fns";
 
