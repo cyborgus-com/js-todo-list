@@ -33,8 +33,7 @@ class Todo {
             return;
         }
 
-        let project = 
-            {
+        let project = {
                 pid: Date.now(),
                 name: projectName,
                 description: projectDesc,
@@ -51,6 +50,25 @@ class Todo {
         }
 
     createToDo() {
+        const form = document.querySelector('todo-form');
+
+        const pid = form.elements['pid'].value;
+        const todoName = form.elements['todo-name'].value;
+        const todoDesc = form.elements['todo-description'].value;
+        const todoDueDate = form.elements['todo-duedate'].value;
+        const todoStatus = form.elements['todo-status'].value;
+        const todoPriority = form.elements['todo-priority'].value;
+
+        if (pid === '' || todoName === '') {
+            return;
+        }
+
+        let todo = {
+            // CONTINUE HERE
+            // FOLLOW PROJECT CREATION
+            // WITH THE EXCEPTION OF FINDING PROJECT IN LOCALSTAORAGE BY PID 
+            // AND APPENDING TODO ARRAY THERE
+        }
 
     }
 
@@ -79,9 +97,9 @@ class Todo {
             })
         } else {
             let input = document.createElement('option');
+            input.value = 'NA';
             input.innerText = 'No Projects Availabe';
             pid.append(input);
-            return;
         }
     }
 
