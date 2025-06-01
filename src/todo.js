@@ -1,7 +1,7 @@
 class Todo {
 
     constructor() {
-        // this.projects = this.updateList();
+        this.initializeDefaultProject();
         this.initializeEventHandlers();
         this.populateProjectDropdown();
         this.updateList();
@@ -26,6 +26,27 @@ class Todo {
             this.updateList();
         })
 
+    }
+
+    initializeDefaultProject() {
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+        let checkDefault = projects.some(project => project.pid === 0);
+
+        if (!checkDefault) {
+
+            let defaultProject = {
+                pid: 0,
+                name: 'Default',
+                description: 'Default Project',
+                duedate: '',
+                priority: '',
+                todos: []
+                }
+
+            projects.unshift(defaultProject);
+            localStorage.setItem('projects', JSON.stringify(projects));
+        }
     }
 
     createProject() {
@@ -115,6 +136,7 @@ class Todo {
     populateProjectDropdown() {
         const pid = document.querySelector('#pid')
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
         if (projects) {
             pid.innerText = '';
             projects.forEach(project => {
