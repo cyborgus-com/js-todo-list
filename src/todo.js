@@ -5,6 +5,7 @@ class Todo {
         this.initializeEventHandlers();
         this.populateProjectDropdown();
         this.updateList();
+        this.renderProject();
     }
 
     initializeEventHandlers() {
@@ -20,11 +21,14 @@ class Todo {
             e.preventDefault();
             this.createToDo();
         })
-        
-        const listProjectsButton = document.querySelector('#list-my-projects');
-        listProjectsButton.addEventListener('click', () => {
-            this.updateList();
-        })
+     
+        // Old functionality for listing projects
+        // This is now handled by the sidebar update
+
+        // const listProjectsButton = document.querySelector('#list-my-projects');
+        // listProjectsButton.addEventListener('click', () => {
+        //     this.updateList();
+        // })
 
     }
 
@@ -74,6 +78,7 @@ class Todo {
         projects.push(project);
         localStorage.setItem('projects', JSON.stringify(projects));
         this.updateList();
+        this.renderProject();
         this.populateProjectDropdown();
         form.reset();
     }
@@ -128,7 +133,8 @@ class Todo {
 
         projects.forEach(project => {
             let prDiv = document.createElement('div');
-            prDiv.innerText = 'Project: ' + project['name'];
+            prDiv.id = project.pid;
+            prDiv.innerText = project['name'];
             sidebar.append(prDiv);
         });
     }
@@ -151,6 +157,37 @@ class Todo {
             input.innerText = 'No Projects Availabe';
             pid.append(input);
         }
+    }
+
+    renderProject() {
+        let projectDivs = document.querySelectorAll('.sidebar-projects > div');
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+        projectDivs.forEach(div => {
+            div.addEventListener('click', () => {
+                const pid = Number(div.id);
+                const projectItem = projects.find(project => project.pid === pid);
+                if (projectItem){
+                    console.log(`found project with pid: ${pid}`, projectItem);
+                    this.populateMainArea(projectItem);
+                } else {
+                    console.log(`did NOT find the project with pid: ${pid}`);
+                }
+            })
+        })
+    }
+
+    populateMainArea(projectItem) {
+        let mainArea = document.querySelector('.rendered');
+        mainArea.innerText = '';
+        const renderedCrap = document.createElement('div');
+        renderedCrap.innerText = projectItem.name 
+            + '; Description: ' 
+            + projectItem.description
+            + '; todos: '
+            + projectItem.todos;
+        mainArea.append(renderedCrap);
+
     }
 
     deleteProject() {
