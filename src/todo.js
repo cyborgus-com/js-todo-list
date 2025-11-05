@@ -181,11 +181,20 @@ class Todo {
         let mainArea = document.querySelector('.rendered');
         mainArea.innerText = '';
         const renderedCrap = document.createElement('div');
+        const todosText = (projectItem.todos || [])
+            .map(todo => `
+                ${todo.name}: 
+                ${todo.description}, 
+                Due by: ${todo.duedate}, 
+                Status: ${todo.status}, 
+                Priority: ${todo.priority}
+                `)
+            .join(`\n`);
         renderedCrap.innerText = projectItem.name 
             + '; Description: ' 
             + projectItem.description
-            + '; todos: '
-            + projectItem.todos;
+            + ';\n todos: \n'
+            + todosText;
         mainArea.append(renderedCrap);
 
     }
