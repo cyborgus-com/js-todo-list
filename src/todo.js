@@ -108,8 +108,14 @@ class Todo {
         }
 
         this.addTodo(pid, newTodo);
-
         this.updateList();
+        this.renderProject();
+
+        let currentProject = JSON.parse(localStorage.getItem('projects')).find(project => project.pid == pid);
+        if (currentProject) {
+            this.populateMainArea(currentProject);
+        }
+
         form.reset();
     }
 
@@ -181,6 +187,13 @@ class Todo {
         let mainArea = document.querySelector('.rendered');
         mainArea.innerText = '';
         const renderedCrap = document.createElement('div');
+        
+        // render project name and "todos: " header 
+        // create a div container for todos
+        // run a loop over todos in this project, render innerText, button
+        // in the loop add listener onClick and call the deletion function with PID and TID passed on
+        // follow the logic of appending the DIVs 
+
         const todosText = (projectItem.todos || [])
             .map(todo => `
                 ${todo.name}: 
@@ -196,7 +209,6 @@ class Todo {
             + ';\n todos: \n'
             + todosText;
         mainArea.append(renderedCrap);
-
     }
 
     deleteProject() {
@@ -204,6 +216,7 @@ class Todo {
     }
 
     deleteToDo() {
+        let rendered = document.querySelector('.rendered');
 
     }
 
