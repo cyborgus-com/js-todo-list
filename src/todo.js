@@ -189,10 +189,32 @@ class Todo {
         const renderedCrap = document.createElement('div');
         
         // render project name and "todos: " header 
+        renderedCrap.innerText = projectItem.name 
+        + '; Description: ' 
+        + projectItem.description
+        + ';\n todos: \n';
+
         // create a div container for todos
-        // run a loop over todos in this project, render innerText, button
-        // in the loop add listener onClick and call the deletion function with PID and TID passed on
-        // follow the logic of appending the DIVs 
+        todoContainer = document.createElement('div');
+
+        // run a loop over todos in this project
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        let thisProject = projects.find(project => project.pid === projectItem.pid);
+
+        if (thisProject) {
+            console.log(`found project with ${thisProject.pid}`);
+            thisProject.todos.forEach(todo => {
+
+            // render innerText, button
+
+            // in the loop add listener onClick and call the deletion function with PID and TID passed on
+            // follow the logic of appending the DIVs 
+
+            })
+
+        } else {
+            console.log(`project not found!`);
+        }
 
         const todosText = (projectItem.todos || [])
             .map(todo => `
@@ -203,11 +225,6 @@ class Todo {
                 Priority: ${todo.priority}
                 `)
             .join(`\n`);
-        renderedCrap.innerText = projectItem.name 
-            + '; Description: ' 
-            + projectItem.description
-            + ';\n todos: \n'
-            + todosText;
         mainArea.append(renderedCrap);
     }
 
@@ -215,7 +232,7 @@ class Todo {
 
     }
 
-    deleteToDo() {
+    deleteToDo(pid, tid) {
         let rendered = document.querySelector('.rendered');
 
     }
