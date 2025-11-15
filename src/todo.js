@@ -199,29 +199,28 @@ class Todo {
         (projectItem.todos || []).forEach(todo => {
 
             const todoContainer = document.createElement('div');
+            todoContainer.style.marginBottom = '10px';
+
             // render innerText, button
-            const todoText = `${todo.name}: 
+            const todoText = document.createElement('span');
+            todoText.innerText = `${todo.name}: 
                     ${todo.description}, 
                     Due by: ${todo.duedate}, 
                     Status: ${todo.status}, 
                     Priority: ${todo.priority}`;
 
-            todoContainer.innerText = todoText;
-
             const deleteButton = document.createElement('button');
             deleteButton.innerText = 'X';
-            deleteButton.type = 'button';
-
+            // deleteButton.type = 'button';
             deleteButton.onclick = () => this.deleteToDo(projectItem.pid, todo.tid);
 
-            todoContainer.append(deleteButton);
+            todoContainer.appendChild(deleteButton);
+            todoContainer.appendChild(todoText);
             todoCrap.append(todoContainer);
             
         })
 
         renderedCrap.appendChild(todoCrap);
-        mainArea.append(renderedCrap);
-
         mainArea.append(renderedCrap);
     }
 
@@ -230,13 +229,12 @@ class Todo {
     }
 
     deleteToDo(pid, tid) {
-        let rendered = document.querySelector('.rendered');
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
         const projectItem = projects.find(project => project.pid === pid);
 
         projectItem.todos = (projectItem.todos || []).filter(todo => todo.tid !== tid);
         localStorage.setItem('projects', JSON.stringify(projects));
-
+        this.renderProject();
         this.populateMainArea(projectItem);
     }
 
