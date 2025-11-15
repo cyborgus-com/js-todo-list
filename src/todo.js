@@ -86,6 +86,9 @@ class Todo {
     createToDo() {
         const form = document.querySelector('.todo-form');
 
+        // add saved PID value so it's restored for the next PID submission
+        const savedPid = form.elements['pid'].value;
+
         const pid = Number(form.elements['pid'].value);
         const todoName = form.elements['todo-name'].value;
         const todoDesc = form.elements['todo-description'].value;
@@ -117,6 +120,11 @@ class Todo {
         }
 
         form.reset();
+
+        // restore the project selection to the previously selected one
+        if (savedPid) {
+            form.elements['pid'].value = savedPid;
+        }
     }
 
     addTodo(pid, newTodo) {
