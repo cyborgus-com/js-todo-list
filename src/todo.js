@@ -1,11 +1,12 @@
 class Todo {
 
     constructor() {
-        this.initializeDefaultProject();
         this.initializeEventHandlers();
         this.populateProjectDropdown();
         this.updateList();
         this.renderProject();
+        this.initializeDefaultProject();
+
     }
 
     initializeEventHandlers() {
@@ -21,15 +22,6 @@ class Todo {
             e.preventDefault();
             this.createToDo();
         })
-     
-        // Old functionality for listing projects
-        // This is now handled by the sidebar update
-
-        // const listProjectsButton = document.querySelector('#list-my-projects');
-        // listProjectsButton.addEventListener('click', () => {
-        //     this.updateList();
-        // })
-
     }
 
     initializeDefaultProject() {
@@ -51,6 +43,9 @@ class Todo {
             projects.unshift(defaultProject);
             localStorage.setItem('projects', JSON.stringify(projects));
         }
+
+        let defaultProj = projects.find(project => project.pid == 0);
+        this.populateMainArea(defaultProj);
     }
 
     createProject() {
