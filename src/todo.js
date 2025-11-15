@@ -214,7 +214,6 @@ class Todo {
 
             const deleteButton = document.createElement('button');
             deleteButton.innerText = 'X';
-            // deleteButton.type = 'button';
             deleteButton.onclick = () => this.deleteToDo(projectItem.pid, todo.tid);
 
             todoContainer.appendChild(deleteButton);
