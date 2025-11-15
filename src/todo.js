@@ -195,36 +195,59 @@ class Todo {
         + ';\n todos: \n';
 
         // create a div container for todos
-        todoContainer = document.createElement('div');
+        // todoContainer = document.createElement('div');
 
         // run a loop over todos in this project
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
         let thisProject = projects.find(project => project.pid === projectItem.pid);
 
+        const todoCrap = document.createElement('div');
+
         if (thisProject) {
             console.log(`found project with ${thisProject.pid}`);
+
             thisProject.todos.forEach(todo => {
 
-            // render innerText, button
+                const todoContainer = document.createElement('div');
+                // render innerText, button
+                const todoText = `${todo.name}: 
+                        ${todo.description}, 
+                        Due by: ${todo.duedate}, 
+                        Status: ${todo.status}, 
+                        Priority: ${todo.priority}`;
+
+                // const todosText = (projectItem.todos || [])
+                //     .map(todo => `
+                //         ${todo.name}: 
+                //         ${todo.description}, 
+                //         Due by: ${todo.duedate}, 
+                //         Status: ${todo.status}, 
+                //         Priority: ${todo.priority}
+                //         `)
+                //     .join(`\n`);
+
+                todoContainer.innerText = todoText;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = 'X';
+                deleteButton.type = 'button';
+                // deleteButton.onclick
+                todoContainer.append(deleteButton);
+                todoCrap.append(todoContainer);
+                
+                })
 
             // in the loop add listener onClick and call the deletion function with PID and TID passed on
             // follow the logic of appending the DIVs 
-
-            })
+            renderedCrap.appendChild(todoCrap);
+            mainArea.append(renderedCrap);
 
         } else {
             console.log(`project not found!`);
         }
 
-        const todosText = (projectItem.todos || [])
-            .map(todo => `
-                ${todo.name}: 
-                ${todo.description}, 
-                Due by: ${todo.duedate}, 
-                Status: ${todo.status}, 
-                Priority: ${todo.priority}
-                `)
-            .join(`\n`);
+
+
         mainArea.append(renderedCrap);
     }
 
