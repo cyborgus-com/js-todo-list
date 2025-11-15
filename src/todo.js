@@ -194,13 +194,6 @@ class Todo {
         + projectItem.description
         + ';\n todos: \n';
 
-        // create a div container for todos
-        // todoContainer = document.createElement('div');
-
-        // run a loop over todos in this project
-        // let projects = JSON.parse(localStorage.getItem('projects')) || [];
-        // let thisProject = projects.find(project => project.pid === projectItem.pid);
-
         const todoCrap = document.createElement('div');
 
         (projectItem.todos || []).forEach(todo => {
@@ -238,7 +231,13 @@ class Todo {
 
     deleteToDo(pid, tid) {
         let rendered = document.querySelector('.rendered');
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        const projectItem = projects.find(project => project.pid === pid);
 
+        projectItem.todos = (projectItem.todos || []).filter(todo => todo.tid !== tid);
+        localStorage.setItem('projects', JSON.stringify(projects));
+
+        this.populateMainArea(projectItem);
     }
 
 }
